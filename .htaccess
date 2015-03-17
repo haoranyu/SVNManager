@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^test/([a-zA-Z0-9]+)/$ index.php?module=$1&test=1
+RewriteRule ^/$ index.php?module=index
+
+ErrorDocument 404 ./404.html

@@ -1,0 +1,2 @@
+<?php
+$hw = 'hello world';
