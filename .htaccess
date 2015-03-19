@@ -1,6 +1,7 @@
 RewriteEngine On
-RewriteBase /
-RewriteRule ^test/([a-zA-Z0-9]+)/$ index.php?module=$1&test=1
-RewriteRule ^/$ index.php?module=index
+RewriteBase /app/CS242/Portfolio/
 
-ErrorDocument 404 ./404.html
+RewriteRule ^parser/$ index.php?module=parser
+
+
+RewriteRule ^test/(.*)$ index.php?test=1&module=$1

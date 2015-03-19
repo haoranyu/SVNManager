@@ -1,3 +1,3 @@
 <?php
-    include('route.php');
-    include('load.php');
+    include('framework/route.php');
+    include('framework/load.php');
