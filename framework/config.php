@@ -9,5 +9,6 @@
 
     $__modules = array(
         'svn',
-        'revision'
+        'revision',
+        'preview'
     );

@@ -57,7 +57,7 @@
             Path: <?=$path == '/' ? '/' : '/'.$path ?>
             <?php if($path != '/'):?>
                 <span class="option">
-                    <a class="am-icon-mail-reply" href="../"> Back</a> 
+                    <a class="am-icon-mail-reply" href="../"> Back</a>
                     <a class="am-icon-clock-o" href="<?=$__const['host'].'/revision'.($path =='/'?'/':'/'.$path.'/')?>"> History</a>
                 </span>
             <?php endif;?>
@@ -80,7 +80,7 @@
                     <?php if($value['type'] == '/'):?>
                         <td><a href="./<?=$key?>/"><?=$key?></a></td>
                     <?php else:?>
-                        <td><a href="#"><?=$key?></a></td>
+                        <td><a href="<?=$__const['host'].'/preview'.($path =='/'?'/':'/'.$path.'/').$key?>"><?=$key?></a></td>
                     <?php endif;?>
                     <td><?=$value['author']?></td>
                     <td><?=substr($value['date'], 0, 10)?></td>
