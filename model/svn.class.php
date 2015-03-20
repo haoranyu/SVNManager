@@ -2,10 +2,18 @@
     class Svn{
         private $treeStructure;
 
+        /**
+         * Constuctor of Svn
+         * @param Array $treeStructure The tree structure of all svn list and logs
+         */
         function __construct($treeStructure) {
             $this->treeStructure = $treeStructure;
         }
 
+        /**
+         * Get the list of files and folders accroding to root folder
+         * @return Array The list of files and folders accroding to root folder
+         */
         public function getRootList() {
             $rootList = array();
             foreach($this->treeStructure as $key => $value) {
@@ -22,8 +30,13 @@
             return $rootList;
         }
 
-        public function getList($file) {
-            $path = explode('/', $file);
+        /**
+         * Get the list of files and folders accroding to the filename
+         * @param String $filename The absolute name of file/folder
+         * @return Array The list of files and folders accroding to the filename
+         */
+        public function getList($filename) {
+            $path = explode('/', $filename);
             $current = $this->treeStructure;
             foreach($path as $level) {
                 if (array_key_exists($level, $current)) {

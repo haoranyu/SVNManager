@@ -4,10 +4,22 @@ class Parser{
     private $svnList;
     private $treeStructure;
 
+    /**
+     * Construct svn log and list according to the input
+     * @param String $svnLogFile  Svn log file absolute name
+     * @param String $svnListFile Svn list file absolute name
+     */
     function __construct($svnLogFile, $svnListFile) {
         $this->svnLog = self::parseXml($svnLogFile, true);
         $this->svnList = self::parseXml($svnListFile, true);
     }
+
+    /**
+     * Xml parser
+     * @param String $xmlFile Xml file absolute name
+     * @param Boolean $toArray Whether to turn it to array
+     * @return mixed SimpleXMLElement or Array of the original xml file
+     */
     public function parseXml($xmlFile, $toArray = false) {
         if($toArray) {
             return json_decode(json_encode(simplexml_load_file($xmlFile)), TRUE);
@@ -17,6 +29,10 @@ class Parser{
         }
     }
 
+    /**
+     * Build a tree structure of svn records
+     * @return Array The tree of svn records
+     */
     public function buildTreeStructure() {
         $this->treeStructure = array();
         foreach($this->svnList['list']['entry'] as $entry) {
@@ -26,12 +42,19 @@ class Parser{
         return $this->treeStructure;
     }
 
-    public function addLogToStructure() {
+    /**
+     * Read svn log and add revision to the tree structure of svn records
+     */
+    private function addLogToStructure() {
         foreach($this->svnLog['logentry'] as $entry) {
             $this->processLogEnrty($entry);
         }
     }
 
+    /**
+     * Process each log entry
+     * @param Array $entry Entry of svn log
+     */
     private function processLogEnrty($entry) {
         $files = (array)($entry['paths']['path']);
         foreach($files as $file) {
@@ -40,6 +63,11 @@ class Parser{
         }
     }
 
+    /**
+     * Add log to the file specified
+     * @param String $file The file to add to log
+     * @param Array $entry Entry of svn log
+     */
     private function addLogToFile($file, $entry) {
         $revision = $entry['@attributes']['revision'];
         $author = $entry['author'];
@@ -72,6 +100,10 @@ class Parser{
         }
     }
 
+    /**
+     * Process each list entry
+     * @param Array $entry Entry of svn list
+     */
     private function processListEnrty($entry) {
         $filename = $entry['name'];
         $path = explode('/', $entry['name']);
@@ -86,6 +118,11 @@ class Parser{
         }
     }
 
+    /**
+     * build each list entry node
+     * @param Array $entry The entry we are goding to build
+     * @param String $level The level relation of the filename(path)
+     */
     private function buildNode($entry, $level) {
         $revision = $entry['commit']['@attributes']['revision'];
         $filetype = $entry['@attributes']['kind'];
@@ -113,6 +150,11 @@ class Parser{
         return array('/METADATA' => $metadata);
     }
 
+    /**
+     * Get the type of the file
+     * @param String $filetype The basic type (dir/file) of the file
+     * @param String $filename The filename with suffix of the file
+     */
     private function getFileType($filetype, $filename) {
         if($filetype == 'dir') {
             return '/';
