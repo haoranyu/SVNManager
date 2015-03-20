@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteBase /app/CS242/Portfolio/
 
-RewriteRule ^parser/$ index.php?module=parser
+RewriteRule ^/$ index.php?module=index
 
 
 RewriteRule ^test/(.*)$ index.php?test=1&module=$1
