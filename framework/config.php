@@ -4,5 +4,5 @@
     );
 
     $__modules = array(
-        'index'
+        'svn'
     );

@@ -20,12 +20,59 @@ class Parser{
     public function buildTreeStructure() {
         $this->treeStructure = array();
         foreach($this->svnList['list']['entry'] as $entry) {
-            $this->addToTreeStructure($entry);
+            $this->processListEnrty($entry);
         }
+        $this->addLogToStructure();
         return $this->treeStructure;
     }
 
-    private function addToTreeStructure($entry) {
+    public function addLogToStructure() {
+        foreach($this->svnLog['logentry'] as $entry) {
+            $this->processLogEnrty($entry);
+        }
+    }
+
+    private function processLogEnrty($entry) {
+        $files = (array)($entry['paths']['path']);
+        foreach($files as $file) {
+            $file = substr($file, 7);
+            $this->addLogToFile($file, $entry);
+        }
+    }
+
+    private function addLogToFile($file, $entry) {
+        $revision = $entry['@attributes']['revision'];
+        $author = $entry['author'];
+        $date = $entry['date'];
+        $msg = $entry['msg'];
+
+        $path = explode('/', $file);
+        $current = &$this->treeStructure;
+        foreach($path as $level) {
+            if (array_key_exists($level, $current)) {
+                $current = &$current[$level];
+
+
+                if(array_key_exists('/METADATA', $current)) {
+                    if(array_key_exists($revision, $current['/METADATA']['commit'])) {
+                        $current['/METADATA']['commit'][$revision]['msg'] = $msg;
+
+                    }
+                    else {
+                        $revisionData = array(
+                            'revision' => $revision,
+                            'author' => $author,
+                            'date' => $date,
+                            'msg' => $msg
+                        );
+                        $current['/METADATA']['commit'][$revision] = $revisionData;
+                    }
+                }
+            }
+        }
+    }
+
+    private function processListEnrty($entry) {
         $filename = $entry['name'];
         $path = explode('/', $entry['name']);
         $current = &$this->treeStructure;
@@ -47,19 +94,21 @@ class Parser{
 
         $commit = array(
             $revision => array(
+                'revision' => $revision,
                 'author' => $author,
                 'date' => $date
             )
         );
 
-        if($filetype == 'file') {
-            $commit[$revision]['size'] = $entry['size'];
-        }
-
         $metadata = array(
             'type' => self::getFileType($filetype, $level),
+            'path' => $entry['name'],
             'commit' => $commit
         );
+
+        if($filetype == 'file') {
+            $metadata['size'] = $entry['size'];
+        }
 
         return array('/METADATA' => $metadata);
     }

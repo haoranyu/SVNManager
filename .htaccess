@@ -1,7 +1,8 @@
 RewriteEngine On
 RewriteBase /app/CS242/Portfolio/
 
-RewriteRule ^/$ index.php?module=index
+RewriteRule ^/$ index.php?module=svn
+RewriteRule ^(.*)/$ index.php?module=svn&path=$1
 
 
 RewriteRule ^test/(.*)$ index.php?test=1&module=$1

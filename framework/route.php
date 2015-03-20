@@ -3,5 +3,5 @@
         $module = $_GET['module'];
     }
     else {
-        $module = 'index';
+        $module = 'svn';
     }
