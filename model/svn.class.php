@@ -9,8 +9,15 @@
         public function getRootList() {
             $rootList = array();
             foreach($this->treeStructure as $key => $value) {
-                $rootList[$key] = array_shift($value['/METADATA']['commit']);
+                $rootList[$key] = (array)array_shift($value['/METADATA']['commit']);
                 $rootList[$key]['type'] = $value['/METADATA']['type'];
+
+                if(array_key_exists('size', $value['/METADATA'])) {
+                    $rootList[$key]['size'] = $value['/METADATA']['size'];
+                }
+                else {
+                    $rootList[$key]['size'] = '-';
+                }
             }
             return $rootList;
         }
@@ -31,6 +38,13 @@
                 }
                 $list[$key] = array_shift($value['/METADATA']['commit']);
                 $list[$key]['type'] = $value['/METADATA']['type'];
+
+                if(array_key_exists('size', $value['/METADATA'])) {
+                    $list[$key]['size'] = $value['/METADATA']['size'];
+                }
+                else {
+                    $list[$key]['size'] = '-';
+                }
             }
             return $list;
         }

@@ -4,13 +4,13 @@ if(isset($_GET['path'])) {
     $path = $_GET['path'];
 }
 else {
-    $path = '';
+    $path = '/';
 }
 
 $parser = new Parser('./resource/data/svn_log.xml', './resource/data/svn_list.xml');
 $svn = new Svn($parser->buildTreeStructure());
 
-if($path == '') {
+if($path == '/') {
     $list = $svn->getRootList();
 }
 else {
