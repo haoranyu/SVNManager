@@ -1,4 +1,5 @@
 <?php
+
     if(isset($_GET['test'])) {
         // if unit test is requested than go into test
         header('Content-Type: text/plain; charset=urf-8');
@@ -8,11 +9,11 @@
     }
     else {
         // loading all the models
-        foreach($__service as $module) {
-            include('model/'.$module.'.class.php');
+        foreach($__service as $m) {
+            include('model/'.$m.'.class.php');
         }
-        foreach($__modules as $module) {
-            include('model/'.$module.'.class.php');
+        foreach($__modules as $m) {
+            include('model/'.$m.'.class.php');
         }
 
         // loading the controller accordingly

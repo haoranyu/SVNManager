@@ -8,5 +8,6 @@
     );
 
     $__modules = array(
-        'svn'
+        'svn',
+        'revision'
     );

@@ -7,7 +7,12 @@
     <meta name="keywords" content="">
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Portfolio</title>
+    <?php if($path != '/'):?>
+        <title><?=$path == '/' ? '/' : '/'.$path ?> - Portfolio</title>
+    <?php else:?>
+        <title>Portfolio</title>
+    <?php endif;?>
+
 
     <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">
@@ -38,7 +43,7 @@
 <header class="am-topbar am-topbar-inverse">
     <div class="container">
         <h1 class="am-topbar-brand">
-            Portfolio
+            <a href="<?=$__const['host']?>">Portfolio</a>
         </h1>
         <nav>
             <strong>Author</strong> Haoran Yu / <strong>Version</strong> 0.1
@@ -52,7 +57,8 @@
             Path: <?=$path == '/' ? '/' : '/'.$path ?>
             <?php if($path != '/'):?>
                 <span class="option">
-                    <a class="am-icon-mail-reply" href="../"> Back</a>
+                    <a class="am-icon-mail-reply" href="../"> Back</a> 
+                    <a class="am-icon-clock-o" href="<?=$__const['host'].'/revision'.($path =='/'?'/':'/'.$path.'/')?>"> History</a>
                 </span>
             <?php endif;?>
         </div>
@@ -78,7 +84,7 @@
                     <?php endif;?>
                     <td><?=$value['author']?></td>
                     <td><?=substr($value['date'], 0, 10)?></td>
-                    <td><?=$value['revision']?></td>
+                    <td><a target="_blank" href="<?=$__const['host'].'/revision'.($path =='/'?'/':'/'.$path.'/').$key?>/"><?=$value['revision']?></a></td>
                     <td><?=$value['type']?></td>
                     <td><?=$value['size']?></td>
                     <td title="<?=$value['msg']?>"><?=substr($value['msg'], 0, 50)?></td>
