@@ -13,12 +13,14 @@
             include('model/'.$m.'.class.php');
         }
         foreach($__modules as $m) {
-            include('model/'.$m.'.class.php');
+            include('model/'.$m[1].'.class.php');
         }
 
         // loading the controller accordingly
-        include('controller/'.$module.'.php');
+        include('controller/'.$method.'/'.$module.'.php');
 
         // loading the view accordingly
-        include('view/'.$module.'.php');
+        if($method == 'get') {
+            include('view/'.$module.'.php');
+        }
     }

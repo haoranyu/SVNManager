@@ -8,7 +8,7 @@
     );
 
     $__modules = array(
-        'svn',
-        'revision',
-        'preview'
+        array('get','svn'),
+        array('get','revision'),
+        array('get','preview')
     );
