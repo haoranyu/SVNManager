@@ -17,6 +17,4 @@ if(isset($_POST['file']) && isset($_POST['name']) && isset($_POST['comment'])) {
     }
     return json_encode(true);
 }
-else {
-    return json_encode(false);
-}
+return json_encode(false);
