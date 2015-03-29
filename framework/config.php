@@ -4,7 +4,8 @@
     );
 
     $__service = array(
-        'parser'
+        'parser',
+        'comment'
     );
 
     $__modules = array(

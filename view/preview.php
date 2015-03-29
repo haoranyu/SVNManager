@@ -47,12 +47,27 @@
             <iframe src="https://subversion.ews.illinois.edu/svn/sp15-cs242/hyu34<?=$path == '/' ? '/' : '/'.$path ?>"></iframe>
         </div>
     </div>
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-hd">
+            Comments
+        </div>
+        <div class="am-panel-bd">
+
+        </div>
+        <div class="am-panel-footer am-form" id="comment">
+            <span>Post new comment:</span>
+            <input id="Username">
+            <textarea>something</textarea>
+            <a class="am-btn am-btn-secondary">Post</a>
+        </div>
+    </div>
 </div>
 <footer>
     &copy; 2015 @ University of Illinois at Urbana-Champaign
 </footer>
 <!--[if (gte IE 9)|!(IE)]><!-->
 <script src="<?=$__const['host']?>/reseource/assets/js/jquery.min.js"></script>
+<script src="<?=$__const['host']?>/reseource/assets/js/comment.js"></script>
 <!--<![endif]-->
 <!--[if lte IE 8 ]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
