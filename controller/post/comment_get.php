@@ -2,16 +2,17 @@
 
 $comment = new Comment($conn);
 
-if(isset($_POST['file'])) {
+if(isset($_POST['path'])) {
 
-    $file = $_POST['file'];
+    $path = $_POST['path'];
 
-    if($comment_resource = $comment->getByFile($file)) {
+    if($comment_resource = $comment->getByFile($path)) {
         $comment_list = array();
         foreach ($comment_resource as $comment_row) {
             array_push($comment_list, $comment_row);
         }
-        return json_encode($comment_list);
+        echo json_encode($comment_list);
+        exit;
     }
 }
-return json_encode(false);
+echo json_encode(false);

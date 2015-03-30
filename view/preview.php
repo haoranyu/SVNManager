@@ -54,11 +54,11 @@
         <div class="am-panel-bd">
 
         </div>
-        <div class="am-panel-footer am-form" id="comment">
+        <div class="am-panel-footer am-form">
             <span>Post new comment:</span>
-            <input id="Username">
-            <textarea>something</textarea>
-            <a class="am-btn am-btn-secondary">Post</a>
+            <input id="comment-name">
+            <textarea  id="comment-content">something</textarea>
+            <a class="am-btn am-btn-secondary" id="comment-submit">Post</a>
         </div>
     </div>
 </div>
@@ -66,11 +66,32 @@
     &copy; 2015 @ University of Illinois at Urbana-Champaign
 </footer>
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script src="<?=$__const['host']?>/reseource/assets/js/jquery.min.js"></script>
-<script src="<?=$__const['host']?>/reseource/assets/js/comment.js"></script>
+<script src="<?=$__const['host']?>/resource/assets/js/jquery.min.js"></script>
 <!--<![endif]-->
 <!--[if lte IE 8 ]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <![endif]-->
+<script>
+$(document).on('click','#comment-submit', function() {
+    $.ajax({
+        url: '<?=$__const['host']?>/api/comment/add/',
+        type: 'POST',
+        data: {
+            path: '<?=$path == '/' ? '/' : '/'.$path ?>',
+            name: $('#comment-name').val(),
+            content: $('#comment-content').val()
+        },
+        dataType: 'json',
+        timeout: 8000,
+        error: function(data){
+            alert('数据获取超时');
+        },
+        success: function(data){
+            console.log(data);
+        }
+    });
+});
+</script>
+
 </body>
 </html>

@@ -1,20 +1,20 @@
 <?php
-
 $comment = new Comment($conn);
 
-if(isset($_POST['file']) && isset($_POST['name']) && isset($_POST['comment'])) {
+if(isset($_POST['path']) && isset($_POST['name']) && isset($_POST['content'])) {
 
-    $file = $_POST['file'];
-    $name = htmlspecialchars($_POST['file']);
-    $comment = htmlspecialchars($_POST['file']);
+    $path = $_POST['path'];
+    $name = htmlspecialchars($_POST['name']);
+    $content = htmlspecialchars($_POST['content']);
 
     if(isset($_POST['parent_id'])) {
         $parent_id = intval($_POST['parent_id']);
-        $comment->add($file, $name, $comment, $parent_id);
+        $comment->add($path, $name, $content, $parent_id);
     }
     else {
-        $comment->add($file, $name, $comment);
+        $comment->add($path, $name, $content);
     }
-    return json_encode(true);
+    echo json_encode(true);
+    exit;
 }
-return json_encode(false);
+echo json_encode(false);
