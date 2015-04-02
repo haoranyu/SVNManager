@@ -98,7 +98,7 @@
     &copy; 2015 @ University of Illinois at Urbana-Champaign
 </footer>
 <!--[if (gte IE 9)|!(IE)]><!-->
-<script src="<?=$__const['host']?>/reseource/assets/js/jquery.min.js"></script>
+<script src="<?=$__const['host']?>/resource/assets/js/jquery.min.js"></script>
 <!--<![endif]-->
 <!--[if lte IE 8 ]>
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>

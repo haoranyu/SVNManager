@@ -51,14 +51,19 @@
         <div class="am-panel-hd">
             Comments
         </div>
-        <div class="am-panel-bd">
-
-        </div>
+        <ul class="am-panel-bd am-comments-list comments" id="comment-list">
+            <i class="am-icon-spinner am-icon-spin"></i> Loading...
+        </ul>
         <div class="am-panel-footer am-form">
-            <span>Post new comment:</span>
-            <input id="comment-name">
-            <textarea  id="comment-content">something</textarea>
-            <a class="am-btn am-btn-secondary" id="comment-submit">Post</a>
+            <div class="am-form-group">
+                <label for="comment-name">Name</label>
+                <input type="email" class="" id="comment-name" placeholder="Enter your name">
+            </div>
+            <div class="am-form-group">
+                <label for="comment-content">Comment</label>
+                <textarea class="" rows="5" id="comment-content" placeholder="Enter the content of comment"></textarea>
+            </div>
+            <p><a class="am-btn am-btn-secondary" id="comment-submit">Post Comment</a></p>
         </div>
     </div>
 </div>
@@ -72,14 +77,13 @@
 <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 <![endif]-->
 <script>
-$(document).on('click','#comment-submit', function() {
+
+$(document).ready(function() {
     $.ajax({
-        url: '<?=$__const['host']?>/api/comment/add/',
+        url: '<?=$__const['host']?>/api/comment/get/',
         type: 'POST',
         data: {
-            path: '<?=$path == '/' ? '/' : '/'.$path ?>',
-            name: $('#comment-name').val(),
-            content: $('#comment-content').val()
+            path: '<?=$path == '/' ? '/' : '/'.$path ?>'
         },
         dataType: 'json',
         timeout: 8000,
@@ -87,10 +91,48 @@ $(document).on('click','#comment-submit', function() {
             alert('数据获取超时');
         },
         success: function(data){
-            console.log(data);
+            if(data != '') {
+                $('#comment-list').attr('data-empty', 'no');
+                $('#comment-list').html('');
+                for(var i = 0; i < data.length; i++) {
+                    $('#comment-list').append('<li id="comment-'+data[i].id+'" class="am-comment"><a href=""> <img class="am-comment-avatar" src="http://www.gravatar.com/avatar/'+data[i].avatar+'?d=monsterid" alt=""/> </a><div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta"><a href="#link-to-user" class="am-comment-author">'+ data[i].name +'</a> @ '+ data[i].time +'</div></header><div class="am-comment-bd">'+ data[i].comment +'</div></div></li>');
+                }
+            }
+            else {
+                $('#comment-list').attr('data-empty', 'yes');
+                $('#comment-list').html('There is no comment yet. Post your comment below.');
+            }
         }
     });
-});
+
+    $(document).on('click','#comment-submit', function() {
+        $.ajax({
+            url: '<?=$__const['host']?>/api/comment/add/',
+            type: 'POST',
+            data: {
+                path: '<?=$path == '/' ? '/' : '/'.$path ?>',
+                name: $('#comment-name').val(),
+                content: $('#comment-content').val()
+            },
+            dataType: 'json',
+            timeout: 8000,
+            error: function(data){
+                alert('Timeout');
+            },
+            success: function(data){
+                if($('#comment-list').attr('data-empty') == 'yes') {
+                    alert('empty');
+                    $('#comment-list').html('');
+                    $('#comment-list').attr('data-empty', 'no');
+                }
+                $('#comment-list').append('<li id="comment-'+data.id+'" class="am-comment"><a href=""> <img class="am-comment-avatar" src="http://www.gravatar.com/avatar/'+data.avatar+'?d=monsterid" alt=""/> </a><div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta"><a href="#link-to-user" class="am-comment-author">'+ data.name +'</a> @ '+ data.time +'</div></header><div class="am-comment-bd">'+ data.comment +'</div></div></li>');
+            }
+        });
+    });
+})
+
+
+
 </script>
 
 </body>
