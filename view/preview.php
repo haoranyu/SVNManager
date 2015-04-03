@@ -54,7 +54,10 @@
         <ul class="am-panel-bd am-comments-list comments" id="comment-list">
             <i class="am-icon-spinner am-icon-spin"></i> Loading...
         </ul>
-        <div class="am-panel-footer am-form">
+        <div class="am-panel-footer am-panel-hd" id="comment-action">
+            <span>Post New Comment<span>
+        </div>
+        <div class="am-panel-bd am-form">
             <div class="am-form-group">
                 <label for="comment-name">Name</label>
                 <input type="email" class="" id="comment-name" placeholder="Enter your name">
@@ -63,6 +66,7 @@
                 <label for="comment-content">Comment</label>
                 <textarea class="" rows="5" id="comment-content" placeholder="Enter the content of comment"></textarea>
             </div>
+            <input type="hidden" id="comment-parent" value="0" >
             <p><a class="am-btn am-btn-secondary" id="comment-submit">Post Comment</a></p>
         </div>
     </div>
@@ -95,7 +99,14 @@ $(document).ready(function() {
                 $('#comment-list').attr('data-empty', 'no');
                 $('#comment-list').html('');
                 for(var i = 0; i < data.length; i++) {
-                    $('#comment-list').append('<li id="comment-'+data[i].id+'" class="am-comment"><a href=""> <img class="am-comment-avatar" src="http://www.gravatar.com/avatar/'+data[i].avatar+'?d=monsterid" alt=""/> </a><div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta"><a href="#link-to-user" class="am-comment-author">'+ data[i].name +'</a> @ '+ data[i].time +'</div></header><div class="am-comment-bd">'+ data[i].comment +'</div></div></li>');
+                    var comment = '<li id="comment-'+data[i].id+'" data-commentid="'+data[i].id+'" class="am-comment"><a href=""> <img class="am-comment-avatar" src="http://www.gravatar.com/avatar/'+data[i].avatar+'?d=monsterid" alt=""/> </a><div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta"><a href="#link-to-user" class="am-comment-author">'+ data[i].name +'</a> @ '+ data[i].time +'</div><a class="am-comment-meta am-text-right comment-reply am-icon-mail-reply am-fr" href="#comment-action"></a></header><div class="am-comment-bd">'+ data[i].comment +'</div></div></li>';
+
+                    if(data[i].parent_id == 0) {
+                        $('#comment-list').append(comment);
+                    }
+                    else {
+                        $('#comment-'+data[i].parent_id+' > .am-comment-main > .am-comment-bd').append(comment);
+                    }
                 }
             }
             else {
@@ -112,7 +123,8 @@ $(document).ready(function() {
             data: {
                 path: '<?=$path == '/' ? '/' : '/'.$path ?>',
                 name: $('#comment-name').val(),
-                content: $('#comment-content').val()
+                content: $('#comment-content').val(),
+                parent_id: $('#comment-parent').val()
             },
             dataType: 'json',
             timeout: 8000,
@@ -121,18 +133,33 @@ $(document).ready(function() {
             },
             success: function(data){
                 if($('#comment-list').attr('data-empty') == 'yes') {
-                    alert('empty');
                     $('#comment-list').html('');
                     $('#comment-list').attr('data-empty', 'no');
                 }
-                $('#comment-list').append('<li id="comment-'+data.id+'" class="am-comment"><a href=""> <img class="am-comment-avatar" src="http://www.gravatar.com/avatar/'+data.avatar+'?d=monsterid" alt=""/> </a><div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta"><a href="#link-to-user" class="am-comment-author">'+ data.name +'</a> @ '+ data.time +'</div></header><div class="am-comment-bd">'+ data.comment +'</div></div></li>');
+                var comment = '<li id="comment-'+data.id+'" class="am-comment"><a href=""> <img class="am-comment-avatar" src="http://www.gravatar.com/avatar/'+data.avatar+'?d=monsterid" alt=""/> </a><div class="am-comment-main"><header class="am-comment-hd"><div class="am-comment-meta"><a href="#link-to-user" class="am-comment-author">'+ data.name +'</a> @ '+ data.time +'</div></header><div class="am-comment-bd">'+ data.comment +'</div></div></li>';
+                if(data.parent_id == 0) {
+                    $('#comment-list').append(comment);
+                }
+                else {
+                    $('#comment-'+data.parent_id+' > .am-comment-main > .am-comment-bd').append(comment);
+                }
+                location.hash = '#comment-'+data.id;
+
+                $('#comment-name').val('');
+                $('#comment-content').val('');
+                $('#comment-parent').val('0');
+                $('#comment-action span').text('Post New Comment');
             }
         });
     });
+
+    $(document).on('click','.comment-reply', function() {
+        var parent_id = $(this).parents('li').data('commentid');
+        var parent_name = $(this).parent().find('.am-comment-author').text();
+        $('#comment-parent').val(parent_id);
+        $('#comment-action span').text('Reply to ' + parent_name);
+    });
 })
-
-
-
 </script>
 
 </body>
