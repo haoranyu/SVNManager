@@ -5,7 +5,8 @@
 
     $__service = array(
         'parser',
-        'comment'
+        'comment',
+        'filter'
     );
 
     $__modules = array(

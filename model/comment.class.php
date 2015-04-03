@@ -7,14 +7,14 @@ class Comment{
         $this->conn = $conn;
     }
 
-    public function add($file, $name, $comment, $parent_id = 0) {
-        $hash = hash('sha1', $file);
+    public function add($path, $name, $comment, $parent_id = 0) {
+        $hash = hash('sha1', $path);
         $this->conn->query("INSERT INTO `Portfolio`.`comment` (`hash`, `name`, `comment`, `parent_id`, `time`) VALUES ('$hash', '$name', '$comment', '$parent_id', ".time().");");
         return $this->getById($this->conn->insert_id);
     }
 
-    public function getByFile($file) {
-        $hash = hash('sha1', $file);
+    public function getByPath($path) {
+        $hash = hash('sha1', $path);
         $this->result = $this->conn->query("SELECT * FROM `comment` WHERE `hash` = '$hash'");
         return $this->result;
     }

@@ -6,7 +6,7 @@ if(isset($_POST['path'])) {
 
     $path = $_POST['path'];
 
-    if($comment_resource = $comment->getByFile($path)) {
+    if($comment_resource = $comment->getByPath($path)) {
         $comment_list = array();
         foreach ($comment_resource as $comment_row) {
             $comment_row['avatar'] = md5( strtolower( trim( $comment_row['name']."@gmail.com " ) ) );

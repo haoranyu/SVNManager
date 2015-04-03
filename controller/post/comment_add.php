@@ -1,11 +1,12 @@
 <?php
 $comment = new Comment($conn);
+$filter = new Filter($conn);
 
 if(isset($_POST['path']) && isset($_POST['name']) && isset($_POST['content'])) {
 
     $path = $_POST['path'];
-    $name = htmlspecialchars($_POST['name']);
-    $content = htmlspecialchars($_POST['content']);
+    $name = $filter->filter(htmlspecialchars($_POST['name']));
+    $content = $filter->filter(htmlspecialchars($_POST['content']));
 
     if(isset($_POST['parent_id'])) {
         $parent_id = intval($_POST['parent_id']);
