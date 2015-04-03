@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2015-04-03 08:27:21
+-- Generation Time: 2015-04-03 09:32:31
 -- 服务器版本： 5.6.21
 -- PHP Version: 5.6.3
 
@@ -33,19 +33,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment` text COLLATE utf8_unicode_ci NOT NULL,
   `parent_id` int(11) NOT NULL,
   `time` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- 表的结构 `filter`
---
-
-CREATE TABLE IF NOT EXISTS `filter` (
-`id` int(11) NOT NULL,
-  `origin` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `result` varchar(50) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -58,12 +46,6 @@ ALTER TABLE `comment`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `filter`
---
-ALTER TABLE `filter`
- ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -71,12 +53,7 @@ ALTER TABLE `filter`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `filter`
---
-ALTER TABLE `filter`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
