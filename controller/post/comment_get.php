@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Receive comment listing request and return the list of comments
+ */
 $comment = new Comment($conn);
 
 if(isset($_POST['path'])) {

@@ -11,7 +11,6 @@
         <title><?=$path == '/' ? '/' : '/'.$path ?> - Preview - Portfolio</title>
     <?php endif;?>
 
-
     <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">
 

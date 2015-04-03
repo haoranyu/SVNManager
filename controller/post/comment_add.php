@@ -1,4 +1,8 @@
 <?php
+/**
+ * Receive comment adding request and return the comment added
+ */
+
 $comment = new Comment($conn);
 $filter = new Filter($conn);
 

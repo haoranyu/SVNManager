@@ -1,4 +1,7 @@
 <?php
+/**
+ * The model for doing content filtering
+ */
 class Filter{
     private $conn;
     private $result;
@@ -9,8 +12,8 @@ class Filter{
 
     /**
      * Apply filter rules to content and do filtering work
-     * @param  String $content The content to be filtered
-     * @return String          The content after filtering
+     * @param  string $content The content to be filtered
+     * @return string          The content after filtering
      */
     public function filter($content) {
         // get the tokenized content
@@ -27,7 +30,7 @@ class Filter{
 
     /**
      * Request database to check which filter rules should apply
-     * @param Array $tokens Tokenized contents
+     * @param array $tokens Tokenized contents
      */
     private function getByTokens($tokens) {
         $this->result = $this->conn->query("SELECT * FROM `filter` WHERE `origin` IN ('".implode("','", $tokens)."')" );
@@ -36,8 +39,8 @@ class Filter{
 
     /**
      * Tokenize the input conent
-     * @param  String $content The content to be tokenized
-     * @return Array           An array of all words tokens
+     * @param  string $content The content to be tokenized
+     * @return array           An array of all words tokens
      */
     private function tokenize($content) {
         // remove symbols
