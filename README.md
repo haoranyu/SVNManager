@@ -5,7 +5,7 @@ One is named log and the other is list.
 
 ####Author
 
-Haoran Yu (hyu34) @ University of Illinois at Urbana-Champaign
+Haoran Yu
 
 ####Setup
 You need to make sure of the framework/config.php is filled up before you really get into running the application. 
